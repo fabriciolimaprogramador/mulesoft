@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="98216460-dd8f-4c99-bcc4-ab5f2ad62b8e" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="Flow" doc:id="32c99ace-c8a0-4652-a85d-09665d7c6c98" >
+		<scheduler doc:name="Scheduler" doc:id="644c750e-5057-433f-a5da-da9232e4fb0a" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<logger level="INFO" doc:name="Logger" doc:id="b6d6af87-0181-4da6-9794-7157427ef226" message="Logger Flow" category="com.teste.flow"/>
+		<choice doc:name="Choice" doc:id="be02e268-8ed7-43e7-824a-75970160a860" >
+			<when expression='"1" == "1"'>
+				<logger level="INFO" doc:name="Logger" doc:id="013c3a81-42da-4f88-9c94-8d140ff5fbfe" message="Logger 1"/>
+			</when>
+			<when expression='"1" == "2"'>
+				<logger level="INFO" doc:name="Logger" doc:id="17682993-9a15-47b5-96da-817c81039a2e" message="Logger 2"/>
+			</when>
+			<otherwise >
+				<logger level="INFO" doc:name="Logger" doc:id="de4f1559-f872-4293-805e-d2f990df0c51" message="Logger Default"/>
+			</otherwise>
+		</choice>
+		<flow-ref doc:name="Flow Reference" doc:id="2d66276a-b3fa-4ab7-abb9-d59e2f8698eb" name="Sub_Flow"/>
+	</flow>
+	<sub-flow name="Sub_Flow" doc:id="e124ead7-6a38-4f6f-a363-4bdb2996d9c4" >
+		<logger level="INFO" doc:name="Logger" doc:id="a10052ea-86ad-4ebe-94c3-008d68628ae2" message="Logger 1 Sub Flow" category="com.teste.subflow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e58ba6e6-41f9-40fd-b648-4a76aed303a6" message="Logger 2 Sub Flow" category="com.teste.subflow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="ac844468-0d73-4d31-8301-7ba592f65357" message="Logger 3 Sub Flow" category="com.teste.subflow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="b4d9d4c7-6d60-47c0-accd-d10046bd3ddb" message="Logger 4 Sub Flow" category="com.teste.subflow"/>
+	</sub-flow>
+</mule>

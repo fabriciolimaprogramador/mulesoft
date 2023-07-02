@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="2368278a-5849-430e-b5c5-666a71d21691" basePath="/api">
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<flow name="testes-httpFlow" doc:id="c0cc25d0-2868-4fe2-8af8-b6c04d85ec1d" >
+		<http:listener doc:name="Listener" doc:id="d7f55502-134c-4c5d-967d-c20cb08da5cc" config-ref="HTTP_Listener_config1" path="/teste-http" allowedMethods="GET, POST"/>
+		<logger level="INFO" doc:name="Logger" doc:id="08168c45-87b8-4a1e-ae9f-8c7bb1aa1564" message="Entrou ..."/>
+		<set-payload value='#["Sucesso"]' doc:name="Set Payload" doc:id="99ada5d1-ee89-49de-91a6-80d2d790e0a9" />
+		<logger level="INFO" doc:name="Logger" doc:id="d85b7c33-217d-4909-b53c-e73d8550ca16" />
+	</flow>
+</mule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="19bd6cd0-17fa-47f0-915b-3a1011e81658" >
+		<http:listener-connection host="0.0.0.0" port="8081"/>
+	</http:listener-config>
+	<flow name="ola-muleFlow" doc:id="6ce568d4-390f-4413-8b7f-3c74230fd6c4" >
+		<http:listener doc:name="Listener" doc:id="0366ba30-301b-4fa4-a2b3-ddd2a543b7f3" config-ref="HTTP_Listener_config" path="/mundo"/>
+		<logger level="INFO" doc:name="Logger1" doc:id="95da3fe4-f191-4892-8991-bec32ee1833e" message="Logger 1"/>
+		<logger level="INFO" doc:name="Logger2" doc:id="6efbce27-4ff1-4a5f-8b21-cbd63b1716ec" message="Logger 2"/>
+		<logger level="INFO" doc:name="Logger3" doc:id="2f62f95e-55b1-4274-b4b8-50306690edff" message="Logger 3"/>
+		<logger level="INFO" doc:name="Logger4" doc:id="11986786-17f5-4c7b-b608-868075d21147" message="Logger 4"/>
+	</flow>
+</mule>
