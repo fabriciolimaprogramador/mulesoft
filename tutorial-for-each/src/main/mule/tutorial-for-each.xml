@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4143b4f9-aed6-4761-a901-c7bba90764f7" >
+		<http:listener-connection host="0.0.0.0" port="8084" />
+	</http:listener-config>
+	<flow name="tutorial-for-eachFlow" doc:id="fccf77c1-36d9-4f2e-908b-79e890469f7d" >
+		<http:listener doc:name="Listener" doc:id="771fca6a-8812-448c-a0ca-7341a8d1b048" config-ref="HTTP_Listener_config" path="/list"/>
+		<logger level="INFO" doc:name="Logger1" doc:id="b01d014a-4fb4-4fa4-9e5b-fa75f4b68590" message="Entrou no Logger 1"/>
+		<foreach doc:name="For Each" doc:id="dd086171-9e5f-4677-81e3-b157e1e37313" >
+			<ee:transform doc:name="Transform Message" doc:id="6c03f9cd-b1aa-4fe6-9ea7-a958e577a8c9" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload.idade]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<logger level="INFO" doc:name="Logger 2" doc:id="6bf772c1-08c3-4a4c-a7dc-dfb59380b95c" message="#[payload]"/>
+		</foreach>
+	</flow>
+</mule>
