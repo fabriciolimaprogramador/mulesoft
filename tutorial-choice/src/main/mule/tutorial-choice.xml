@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="810e4f89-1488-42f5-87d2-b244db21d177" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="tutorial-choiceFlow" doc:id="8a6ad480-657e-498b-8ddb-390e78bb295e" >
+		<http:listener doc:name="Listener" doc:id="7da5d2aa-468f-43c5-9b30-82261c88885c" config-ref="HTTP_Listener_config" path="/tutorial-choice"/>
+		<logger level="INFO" doc:name="Logger 1" doc:id="b63ea1eb-d9c4-4453-93da-93ce3922f11c" message="Entrou no Logger 1"/>
+		<choice doc:name="Choice" doc:id="f983b8f1-7176-406b-ba98-bfdca08e9748" >
+			<when expression="#[payload.idade &lt; 18]">
+				<logger level="INFO" doc:name="Logger" doc:id="c5b681d1-eb54-4b3e-8466-689b17c59013" message="Menor de idade"/>
+			</when>
+			<when expression="#[payload.idade &gt;= 18 and payload.idade &lt; 60]">
+				<logger level="INFO" doc:name="Logger" doc:id="835245a6-051d-4394-bfa9-5d2df4ec84e9" message="Maior de idade"/>
+			</when>
+			<otherwise >
+				<logger level="INFO" doc:name="Logger" doc:id="02666677-eaf3-4366-a865-19649f029be1" message="Maior de idade e está na melhor idade"/>
+			</otherwise>
+		</choice>
+	</flow>
+</mule>
