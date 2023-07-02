@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="130ca708-3c27-4f0d-90e1-06459d24f24a" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="tutorial-data-weaveFlow" doc:id="cfab224c-868d-4fd6-a81f-f8b25c85981e" >
+		<http:listener doc:name="Listener" doc:id="cd847dba-b7a3-4c90-912f-6bd65f5b5671" config-ref="HTTP_Listener_config" path="/tutorial-data-weave"/>
+		<logger level="INFO" doc:name="Logger" doc:id="6fd46f60-93d3-4ede-8237-9fe0ce5a0557" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="92ac3a3c-278a-4414-91c7-4a750d93eb8c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	IDOC: {
+		(payload map ( payload01 , indexOfPayload01 ) -> {
+			dados: {
+				nome: payload01.nome
+			}
+		})
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

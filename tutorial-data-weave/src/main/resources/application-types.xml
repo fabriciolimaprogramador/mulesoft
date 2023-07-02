@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="json-entrada" format="json">
+      <types:shape format="weave" example="exemplos/entrada.json"><![CDATA[%dw 2.0
+
+type json_entrada = Array<{|  nome: String,   idade: Number {"typeId": "int"}|}> {"example": "[{\\\"nome\\\":\\\"fabricio\\\",\\\"idade\\\":49},{\\\"nome\\\":\\\"celma\\\",\\\"idade\\\":47},{\\\"nome\\\":\\\"arthur\\\",\\\"idade\\\":14},{\\\"nome\\\":\\\"laura\\\",\\\"idade\\\":10}]"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="xml-saida" format="xml">
+      <types:example format="xml" element="IDOC" location="exemplos/saida.xml"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#92ac3a3c-278a-4414-91c7-4a750d93eb8c">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="json-entrada"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="xml-saida"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
