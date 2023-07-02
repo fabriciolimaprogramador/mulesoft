@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config2" doc:name="HTTP Listener config" doc:id="354b14b3-f132-4228-bd93-fb94a701fb0c" >
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<flow name="tutorial-for-each-with-choiceFlow" doc:id="fb9e31ed-0604-4712-829c-45f9c08d9f5b" >
+		<http:listener doc:name="Listener" doc:id="a09d1379-f1e6-4246-9b76-5c8cefc9184d" config-ref="HTTP_Listener_config2" path="/tutorial-for-each-with-choice"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e5d6c612-105e-49ec-8810-2cc386a349c5" message="#[payload]"/>
+		<foreach doc:name="For Each" doc:id="f68de2c6-3df6-4862-b025-5666e5af66a5" >
+			<choice doc:name="Choice" doc:id="180801f7-53d2-41f1-9fe4-7fa726fbf0cc" >
+				<when expression="#[payload.idade &lt; 18]">
+					<logger level="INFO" doc:name="Logger" doc:id="856c887b-9f74-4544-ace1-428026859767" message='#[payload.nome ++ " é menor de idade"]'/>
+				</when>
+				<otherwise >
+					<logger level="INFO" doc:name="Logger" doc:id="d32d3a25-ba5d-4020-bd71-717ed4f771da" message='#[payload.nome ++ " é maior de idade"]'/>
+				</otherwise>
+			</choice>
+		</foreach>
+	</flow>
+</mule>
